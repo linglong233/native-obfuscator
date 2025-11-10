@@ -62,6 +62,19 @@ jobs:
       env:
         CC: ${{ matrix.platform.cc }}
         CXX: ${{ matrix.platform.cxx }}
+    - name: 列出构建产物
+      shell: bash
+      run: |
+        echo "PWD: $(pwd)"
+        ls -al
+        echo "---- build tree ----"
+        if [ -d build ]; then
+          find build -maxdepth 4 -type f -print
+        else
+          echo "no build/ directory"
+        fi
+        echo "---- 子模块 build ----"
+        find . -type d -name build -print -exec sh -c 'echo "== {} =="; find "{}" -maxdepth 2 -type f -print' \;
     - name: 上传到 Release（仅在 tag 构建）
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
