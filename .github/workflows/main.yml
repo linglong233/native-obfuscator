@@ -83,5 +83,6 @@ jobs:
           build/libs/**/*.jar
           build/distributions/**
           build/reports/**
+          ./obfuscator/build/libs/obfuscator.jar
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
