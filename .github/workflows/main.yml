@@ -62,3 +62,13 @@ jobs:
       env:
         CC: ${{ matrix.platform.cc }}
         CXX: ${{ matrix.platform.cxx }}
+    - name: 上传到 Release（仅在 tag 构建）
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          build/libs/**/*.jar
+          build/distributions/**
+          build/reports/**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
